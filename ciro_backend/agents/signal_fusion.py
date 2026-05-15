@@ -18,16 +18,18 @@ PROCESS:
    - Geocode locations (lat/lon, address, zone name)
    - Handle location ambiguity (report "near G-10" → cluster with other nearby reports)
 
-2. Score source credibility (0-100):
-   - Historical accuracy of this source (if available)
-   - Timeliness of signal (fresh vs. stale)
-   - Specificity of location (GPS vs. vague)
-   - Language/urgency analysis (ALL CAPS = hype?)
-   - Verification count (multiple people reporting same thing)
-   - Authority level (official sensor > emergency call)
+2. Score source credibility (0-100) based on source type:
+   - official_sensor:   credibility 0.85-0.95 (high accuracy, real-time)
+   - weather_api:       credibility 0.75-0.90 (official, may miss microclimates)
+   - traffic_map:       credibility 0.55-0.75 (crowd-sourced, noisy)
+   - emergency_call:    credibility 0.50-0.70 (real but panicked, vague location)
+   - social_media:      credibility 0.30-0.50 (unverified, hype language, biased)
+   Formula: credibility = 0.3*accuracy + 0.2*timeliness + 0.2*location_precision
+                          + 0.15*verification + 0.15*authority
 
 3. Detect & flag contradictions:
-   - Example: Traffic map says "flooding congestion", Sensor says "normal flow"
+   - Example: Social media says "major flooding", Official Sensor says "no water level rise"
+   - Example: Emergency call says "fire", Traffic map shows no unusual congestion
    - Action: Flag as contradiction, recommend manual verification
 
 4. Merge duplicates:
@@ -40,11 +42,11 @@ Expected structure:
   "primary_location": {"lat": float, "lon": float, "address": "string"},
   "fused_signals": [
     {
-      "source": "emergency_call",
+      "source": "social_media | official_sensor | weather_api | traffic_map | emergency_call",
       "text": "string",
       "timestamp": "string",
       "credibility": float,
-      "reason": "string"
+      "reason": "string explaining why this credibility score was assigned"
     }
   ],
   "contradictions": [

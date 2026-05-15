@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CIRO — Crisis Intelligence & Response Orchestrator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo-pulse"></div>
+      <span class="logo-text">CIRO</span>
+      <span class="logo-sub">Crisis Intelligence & Response Orchestrator</span>
+    </div>
+    <div class="topbar-right">
+      <span id="system-status" class="status-badge status-online">● SYSTEM ONLINE</span>
+      <span id="clock" class="clock"></span>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <div class="layout">
+
+    <!-- LEFT PANEL: Signal Input -->
+    <aside class="panel panel-left">
+      <h2 class="panel-title">📡 Signal Input</h2>
+      <p class="panel-desc">Select a pre-loaded crisis scenario or define your own signals below.</p>
+
+      <div class="scenario-btns">
+        <button class="btn-scenario active" onclick="loadScenario(1)">Scenario 1<br><small>Water Main + Heatwave</small></button>
+        <button class="btn-scenario" onclick="loadScenario(2)">Scenario 2<br><small>Factory Fire (Offline)</small></button>
+      </div>
+
+      <div class="signals-list" id="signals-list">
+        <!-- Dynamically populated -->
+      </div>
+
+      <div class="resource-section">
+        <h3 class="section-title">🚑 Available Resources</h3>
+        <div class="resource-grid">
+          <div class="resource-item"><span class="res-icon">🚑</span><span id="r-amb">8</span> Ambulances</div>
+          <div class="resource-item"><span class="res-icon">👮</span><span id="r-pol">12</span> Police Units</div>
+          <div class="resource-item"><span class="res-icon">⛑️</span><span id="r-res">2</span> Rescue Teams</div>
+          <div class="resource-item"><span class="res-icon">🚒</span><span id="r-tan">4</span> Water Tankers</div>
+        </div>
+      </div>
+
+      <button class="btn-orchestrate" id="orchestrate-btn" onclick="runOrchestration()">
+        <span id="btn-text">▶ Run CIRO Orchestration</span>
+      </button>
+    </aside>
+
+    <!-- CENTER PANEL: Results -->
+    <main class="panel panel-center">
+      <div id="idle-state" class="idle-state">
+        <div class="idle-icon">🛰️</div>
+        <h2>Awaiting Crisis Signals</h2>
+        <p>Select a scenario on the left and click <strong>Run CIRO Orchestration</strong> to start the Antigravity agent pipeline.</p>
+      </div>
+
+      <div id="results-state" class="results-state hidden">
+        <!-- Crisis Classification Card -->
+        <div class="result-card" id="card-classification">
+          <div class="card-header">
+            <span class="card-icon">🧠</span>
+            <h3>Crisis Classification</h3>
+            <span id="severity-badge" class="severity-badge">—</span>
+          </div>
+          <div class="card-body">
+            <div class="info-row"><span class="label">Type</span><span id="crisis-type" class="value">—</span></div>
+            <div class="info-row"><span class="label">Confidence</span><span id="confidence" class="value">—</span></div>
+            <div class="info-row"><span class="label">Affected Population</span><span id="affected-pop" class="value">—</span></div>
+            <div class="info-row"><span class="label">Expected Duration</span><span id="expected-dur" class="value">—</span></div>
+            <div id="cascade-risks" class="tags-row"></div>
+          </div>
+        </div>
+
+        <!-- Signal Fusion Card -->
+        <div class="result-card" id="card-fusion">
+          <div class="card-header">
+            <span class="card-icon">🔀</span>
+            <h3>Signal Fusion & Credibility</h3>
+          </div>
+          <div class="card-body" id="fusion-signals-body">
+            <!-- Dynamically populated -->
+          </div>
+          <div id="contradictions-section" class="contradiction-box hidden">
+            <span class="warn-icon">⚠️</span>
+            <span id="contradiction-text"></span>
+          </div>
+        </div>
+
+        <!-- Resource Allocation Card -->
+        <div class="result-card" id="card-allocation">
+          <div class="card-header">
+            <span class="card-icon">📦</span>
+            <h3>Resource Allocation Plan</h3>
+          </div>
+          <div class="card-body" id="allocation-body">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Notification Plan Card -->
+        <div class="result-card" id="card-notification">
+          <div class="card-header">
+            <span class="card-icon">📣</span>
+            <h3>Stakeholder Notification Plan</h3>
+          </div>
+          <div class="card-body" id="notification-body">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT PANEL: Agent Pipeline Trace -->
+    <aside class="panel panel-right">
+      <h2 class="panel-title">🤖 Antigravity Agent Traces</h2>
+      <p class="panel-desc">Live execution log of the 7 AI agents.</p>
+      <div id="agent-trace-log" class="trace-log">
+        <div class="trace-idle">Pipeline idle. Run orchestration to see traces.</div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

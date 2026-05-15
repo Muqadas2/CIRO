@@ -13,6 +13,12 @@
 ## Implementation Progress
 - [x] Initial Planning and Architecture Review
 - [x] Phase 1: Project Scaffolding (Backend & Mobile structure)
-- [x] Phase 2: Cloud Orchestrator & Agents implementation (Python)
-- [x] Phase 3: Mobile App Offline Logic (TypeScript/Python mock)
+- [x] Phase 2: Cloud Orchestrator & Agents implementation (Python + Gemini)
+- [x] Phase 3: Mobile App Offline Logic (ad-hoc mesh + SQLite mock)
 - [x] Phase 4: API, Integration & Scenario Testing
+- [x] Phase 5: Dashboard UI (static/index.html + style.css + app.js)
+- [x] Phase 6: FastAPI Server with CORS, /dashboard route, /orchestrate endpoint
+
+## Dashboard
+- URL: http://localhost:8000/dashboard
+- Run server: cd ciro_backend && .\venv\Scripts\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000

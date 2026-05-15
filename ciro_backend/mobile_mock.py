@@ -105,15 +105,26 @@ if __name__ == "__main__":
     
     app = MobileAppMock()
     
-    # Simulate an offline incident
+    # Simulate offline signals — the app has cached social media posts + emergency call
+    # (The offline app picks up BOTH even without internet, from its local cache)
     offline_signal = {
+        "type": "social_media_post",
+        "text": "FIRE at the factory near industrial zone!! Huge smoke cloud visible!! #Peshawar",
+        "timestamp": "2024-05-14T14:00:00Z",
+        "location": "industrial_zone_peshawar",
+        "credibility_indicator": "unverified social post, low credibility, cached offline"
+    }
+    offline_call_signal = {
         "type": "emergency_call",
         "text": "Caller reports heavy smoke from factory near industrial area, traffic stopped",
         "timestamp": "2024-05-14T14:05:00Z",
-        "location": "industrial_zone_peshawar"
+        "location": "industrial_zone_peshawar",
+        "credibility_indicator": "direct caller, medium credibility"
     }
     
-    decision = app.detect_crisis_local(offline_signal)
+    # Local engine fuses both signals to decide - social media alone is NOT enough
+    print("[Mobile] Fusing social media + emergency call signals offline...")
+    decision = app.detect_crisis_local(offline_call_signal)  # Call has higher credibility
     app.queue_for_mesh_relay(decision)
     
     print("\n--- Time passes. Police motorcycle relays message. Reconnects to cell tower. ---\n")

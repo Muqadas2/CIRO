@@ -3,6 +3,16 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+
+# Virtual environments
+venv/
+.venv/
+
+# Databases
+*.db
+
+# Generated trace files
+*_traces.json
 .Python
 env/
 build/

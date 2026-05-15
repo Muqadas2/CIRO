@@ -18,12 +18,17 @@ def run_scenario_2():
     
     app = MobileAppMock()
     
-    # Simulate an offline incident signal
+    # Simulate offline signals:
+    # The app has TWO cached signals - social media (low trust) + emergency call (medium trust)
+    print("[Context] App has cached a social media post (low credibility) and an emergency call.")
+    print("[Context] Social media alone is NOT enough to trigger action. Emergency call confirms it.\n")
+
     offline_signal = {
         "type": "emergency_call",
-        "text": "Caller reports heavy smoke from factory near industrial area, traffic stopped",
+        "text": "Caller reports heavy smoke from factory near industrial area, traffic stopped. Sounds like a fire.",
         "timestamp": "2024-05-14T14:05:00Z",
-        "location": "industrial_zone_peshawar"
+        "location": "industrial_zone_peshawar",
+        "corroborated_by": "social_media_post: 'FIRE at factory!! Huge smoke!! #Peshawar' (credibility: 0.40)"
     }
     
     # Step 1: Local Decision Engine (Offline)
